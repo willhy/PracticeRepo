@@ -1,4 +1,7 @@
-def hello():
-    print('hello world')
+class Hello:
+    def hello():
+        print('hello world')
 
-hello()
+h = Hello()
+h.hello()
+
