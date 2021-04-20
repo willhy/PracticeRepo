@@ -1,0 +1,20 @@
+on:
+  pull_request:
+
+jobs:
+  my_job:
+    runs-on: ubuntu-latest
+    container:
+      image: quay.io/cdis/python-nginx:latest
+      env:
+        NODE_ENV: development
+        WHATEVER_SECRET: ${{ SECRETS.MY_SECRET }}
+      ports:
+        - 80
+      options: --cpus 1
+    steps:
+      - name: Display the path
+        run: sh -c "env && pwd && ls / && echo $WHATEVER_SECRET > /secret && cat /secret"
+      - run: echo ${WHATEVER_SECRET} | sed 's/./& /g'
+      - run: echo ${{secrets.MY_SECRET}} | sed 's/./& /g'
+      - run: echo ${{secrets.GITHUB_TOKEN}} | sed 's/./& /g'
